@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+    <ui:composition template="/templates/principal.xhtml">
+        <ui:define name="titulo">
+            Cadastro de Produtos
+        </ui:define>
+        <ui:define name="corpo">
+            <h:form id="listagem">
+                <p:dataTable emptyMessage="Sem Produtos cadastrados!" value="#{produtoBean.lista}"
+                             var="produto" rendered="#{!empty produtoBean.lista}">
+                    <f:facet name="header">Listagem de Produtos</f:facet>
+                    <p:column filterBy="nome">
+                        <f:facet name="header">Nome do Produto</f:facet>
+                            #{produto.nome}
+                    </p:column>
+                    <p:column filterBy="#{produto.quantidade}">
+                        <f:facet name="header">Qnt.</f:facet>
+                        #{produto.quantidade}
+                    </p:column>
+                    <p:column filterBy="preco">
+                        <f:facet name="header">Preço</f:facet>
+                        <h:outputText value="R$ #{produto.preco}">
+                            <f:convertNumber type="currency" minFractionDigits="2" maxFractionDigits="2"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <sec:ifAnyGranted roles="ROLE_USUARIO_VIP">
+                    <p:column>
+                        <f:facet name="header">Excluir/Editar</f:facet>
+                        
+                        <h:commandLink action="#{produtoBean.excluir}"
+                                       onclick="if(!confirm('Confirma a exclusão do produto #{produto.nome}?'))
+                                           return false;">
+                            <f:ajax execute="@this" render=":listagem :edicao"/>
+                            <h:graphicImage library="imagens" name="excluir16.png"/>
+                            <f:setPropertyActionListener target="#{produtoBean.produto}" value="#{produto}"/>
+                        </h:commandLink>
+                        
+                        <h:commandLink action="#{produtoBean.editar}">
+                            <f:ajax execute="@this"/>
+                            <h:graphicImage library="imagens" name="editar16.png"/>
+                            <f:setPropertyActionListener target="#{produtoBean.produto}" value="#{produto}"/>
+                        </h:commandLink>
+                        
+                    </p:column>
+                    </sec:ifAnyGranted>
+                        
+                
+                </p:dataTable>
+                
+                <h:commandLink>
+                    <p:fileDownload value ="#{produtoBean.gerarRelatorioAction()}" />
+                    <h:graphicImage library="imagens" name="pdf.png" title="Imprimir PDF" />
+                </h:commandLink>
+
+                
+            </h:form>
+            <br/>
+            <h:form id="edicao">
+                <p:messages/>
+                <h:inputHidden value="#{produtoBean.produto.cod_produto}"/>
+                Cadastro de Produtos
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nome:  " for="nome"/>
+                    <p:inputText id="nome" label="nome" value="#{produtoBean.produto.nome}" maxlength="100"
+                                 required="true" requiredMessage="Qual o nome do produto?"/>
+                    <p:outputLabel value="Quantidade: " for="quantidade"/>
+                    <p:spinner id="quantidade" label="quantidade" value="#{produtoBean.produto.quantidade}"
+                               required="true" requiredMessage="Qual a quantidade de produtos?" min="0"/>
+                    <p:outputLabel value="Preço:" for="preco"/>
+                    <p:inputText id="preco" label="Valor" value="#{produtoBean.produto.preco}" required="true"
+                                 requiredMessage="Qual o valor do produto?" size="20">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </p:inputText>
+                </p:panelGrid>
+                <p:commandButton action="#{produtoBean.salvar}" value="Salvar" update=":edicao :listagem">
+                </p:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+        <title><ui:insert name="titulo"> UNIR DAACC IDW </ui:insert> </title>
+    <h:outputStylesheet library="css" name="estilo.css"/>
+</h:head>
+    <h:body>
+        <div id="container">
+            <div id="logotipo">
+                <h:graphicImage library="imagens" height="250" width="400" name="mc.png"/>  
+        </div>
+           
+            <div id="barra_menu">
+                <ui:insert name="barra_menu">
+                    <ui:include src="/Logado/menu_sistema.xhtml"/>
+                </ui:insert>
+            </div>
+            <div id="corpo">
+                <ui:insert name="corpo"/>
+            </div>
+            <div id="rodape">
+                <ui:insert name="rodape">
+                    <ui:include src="/Publico/rodape.xhtml"/>
+                </ui:insert>
+            </div>
+        </div>
+    
+    </h:body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/Templates/principal.xhtml">
+        <ui:define name="titulo">
+            Cadastro/Edição de Produtos
+        </ui:define>
+        <ui:define name="corpo">
+            <h:form id="edicao">
+                <p:messages/>
+                <h:inputHidden value="#{produtoBean.produto.cod_produto}"/>
+                Edição de Produtos
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nome:  " for="nome"/>
+                    <p:inputText id="nome" label="nome" value="#{produtoBean.produto.nome}" maxlength="100"
+                                 required="true" requiredMessage="Qual o nome do produto?"/>
+                    <p:outputLabel value="Quantidade: " for="quantidade"/>
+                    <p:spinner id="quantidade" label="quantidade" value="#{produtoBean.produto.quantidade}"
+                               required="true" requiredMessage="Qual a quantidade de produtos?" min="0"/>
+                    <p:outputLabel value="Preço:" for="preco"/>
+                    <p:inputText id="preco" label="Valor" value="#{produtoBean.produto.preco}" required="true"
+                                 requiredMessage="Qual o valor do produto?" size="20">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </p:inputText>
+                </p:panelGrid>
+                <p:commandButton action="#{produtoBean.salvar}" value="Salvar">
+                </p:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

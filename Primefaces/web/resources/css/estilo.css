@@ -1,0 +1,64 @@
+body, td, th {
+    font-family: Verdana,Arial,Helvetica, sans-serif;
+    font-size: 12px
+}
+th {
+    background: url(#{resource['imagens:fundo_claro.png']});
+    min-height: 25px;
+    pedding: 3px;
+}
+img {
+    border: 0px;
+}
+
+#container {
+    width: 770px;
+    height: 110%;
+    margin: 0 auto
+}
+
+#titulo{
+    float: left;
+    font-size: 25pt;
+    font-variant: small-caps;
+    font-weigth: bold;
+}
+
+#barra_menu{
+    background: url(#{resource['imagens:fundomcmenu.jpg']}) repeat-x; 
+    min-heigt: 25px;
+    pedding: 3px;
+    clear: both;
+}
+
+#corpo{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 300px;
+}
+
+#rodape{
+    background: url(#{resource['imagens:mcrodape.jpg']}) repeat-x;
+    height: 200px;
+    margin-top: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+#logotipo {
+    text-align: center;
+    float:center;
+}
+.info{
+    font-weight: bold;
+    color: green;
+}
+.warn{
+    font-weight: bold;
+    color: #FF0000;
+}
+.fatal, error{
+    font-weight: bold;
+    color:red;
+}
+    
